@@ -1,13 +1,13 @@
-# MAL2018
+# MAL2018 #
 Modern Apps Live, Orlando, FL, December 2018
 
-## Folders
+## Folders ##
 
 
 | Folder   | Description                              |
 |----------|------------------------------------------|
-| Workshop | MAM01 - Workshop: Cloud Modernization and Migration  |
-| Session  | MAW01 - Cloud Migrations: Lessons Learned from the Field  |
+| [Workshop](Workshop%2FREADME.md) | MAM01 - Workshop: Cloud Modernization and Migration  |
+| [Session](Session%2FREADME.md)  | MAW01 - Cloud Migrations: Lessons Learned from the Field  |
 
 
 ## About me ##
