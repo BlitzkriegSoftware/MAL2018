@@ -1,0 +1,20 @@
+{
+  "name": "mongodb-seed",
+  "version": "1.0.0",
+  "description": "Creates MongoDB with Seed Data for demos",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "MongoDB",
+    "Seed"
+  ],
+  "dependencies": {
+    "moment": "^2.22.2",
+    "mongodb": "^3.0.10"
+  },
+  "author": "Stuart Williams",
+  "license": "MIT"
+}

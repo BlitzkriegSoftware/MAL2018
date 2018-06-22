@@ -1,0 +1,4 @@
+{
+    "ConnectionString" : "mongodb://localhost:27017/mal2018",
+    "Database" : "mal2018"
+}
