@@ -11,7 +11,7 @@ var fs = require('fs');
 var path = require('path');
 var http = require('http');
 
-var mongo =  require("mongodb");
+var mongo = require("mongodb");
 var mongoClient = require("mongodb").MongoClient;
 
 // This is the format of the configuration file (case sensitive)
@@ -31,24 +31,32 @@ fs.readFile(settingsFile, 'utf8', function (err, data) {
     global.settings = _settings;
 
     setupMongo();
+    soVeryDone();
 });
 
+var soVeryDone = function () {
+    // process.exit(0);
+    process.exitCode = 0;
+}
+
 var setupMongo = function () {
-    mongoClient.connect(settings.ConnectionString, function (err, db) {
-        if (err) throw err;
+    
+        mongoClient.connect(settings.ConnectionString, function (err, db) {
+            if (err) throw err;
 
-        // Switch DB from 'admin' (default) to the desired Database, this is far from obvious
-        db = db.db(settings.Database);
-        console.log('Current DB: ' + db.databaseName);
+            // Switch DB from 'admin' (default) to the desired Database, this is far from obvious
+            db = db.db(settings.Database);
+            console.log('Current DB: ' + db.databaseName);
 
-        // if there are no records read the data folder and make some
-        anyRecords(db, userCollection, makeUserTestData);
-        anyRecords(db, postCollection, makePostsTestData);
-    });
+            // if there are no records read the data folder and make some
+            anyRecords(db, userCollection, makeUserTestData);
+            anyRecords(db, postCollection, makePostsTestData);
+        });
+
 }
 
 var anyRecords = function (db, collectionName, callback) {
-    db.listCollections().toArray(function(err, collections) { 
+    db.listCollections().toArray(function (err, collections) {
         if (collections.includes(collectionName)) {
             db.collection(collectionName).find().toArray(function (err, items) {
                 if (err) throw err;
@@ -74,7 +82,7 @@ var makeUserTestData = function (db) {
 
         var users = JSON.parse(data);
         users.forEach(function (item, index) {
-            db.collection(userCollection).insertOne(item, function(err, res) {
+            db.collection(userCollection).insertOne(item, function (err, res) {
                 if (err) throw err;
                 console.log(res);
             });
@@ -106,7 +114,7 @@ var makePostsTestData = function (db) {
                     throw error;
                 })
                 .on('finish', function () {
-                    db.collection(postCollection).insertOne(item, function(err, res) {
+                    db.collection(postCollection).insertOne(item, function (err, res) {
                         if (err) throw err;
                         console.log(res);
                     });
@@ -115,5 +123,3 @@ var makePostsTestData = function (db) {
         });
     });
 }
-
-process.exitCode = 0;
