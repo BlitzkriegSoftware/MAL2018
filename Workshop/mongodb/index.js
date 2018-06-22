@@ -11,6 +11,7 @@ var fs = require('fs');
 var path = require('path');
 var http = require('http');
 
+var mongo =  require("mongodb");
 var mongoClient = require("mongodb").MongoClient;
 
 // This is the format of the configuration file (case sensitive)
@@ -46,10 +47,10 @@ var setupMongo = function () {
     });
 }
 
-var anyRecords = function (db, collection, callback) {
-    db.getCollectionNames(function(err, collections) { 
-        if (collectons.includes(collection)) {
-            db.collection(collection).find().toArray(function (err, items) {
+var anyRecords = function (db, collectionName, callback) {
+    db.listCollections().toArray(function(err, collections) { 
+        if (collections.includes(collectionName)) {
+            db.collection(collectionName).find().toArray(function (err, items) {
                 if (err) throw err;
                 if (items) {
                     if (items.length <= 0) {
@@ -58,7 +59,7 @@ var anyRecords = function (db, collection, callback) {
                 }
             });
         } else {
-            db.createCollection(userCollection, function (err, res) {
+            db.createCollection(collectionName, function (err, res) {
                 if (err) throw err;
                 callback(db);
             });
@@ -73,7 +74,10 @@ var makeUserTestData = function (db) {
 
         var users = JSON.parse(data);
         users.forEach(function (item, index) {
-            db.collection(userCollection).insert(item);
+            db.collection(userCollection).insertOne(item, function(err, res) {
+                if (err) throw err;
+                console.log(res);
+            });
         });
 
     });
@@ -81,7 +85,7 @@ var makeUserTestData = function (db) {
 
 var makePostsTestData = function (db) {
 
-    var bucket = new mongodb.GridFSBucket(db, {
+    var bucket = new mongo.GridFSBucket(db, {
         chunkSizeBytes: 1024,
         bucketName: 'images'
     });
@@ -93,7 +97,7 @@ var makePostsTestData = function (db) {
         var posts = JSON.parse(data);
         posts.forEach(function (item, index) {
 
-            var imagePath = path.join(__dirname, datafolder, item.image);
+            var imagePath = path.join(__dirname, dataFolder, item.image);
             fs.createReadStream(imagePath)
                 .pipe(
                     bucket.openUploadStream(item.image)
@@ -102,9 +106,14 @@ var makePostsTestData = function (db) {
                     throw error;
                 })
                 .on('finish', function () {
-                    db.collection(postCollection).insert(item);
+                    db.collection(postCollection).insertOne(item, function(err, res) {
+                        if (err) throw err;
+                        console.log(res);
+                    });
                 });
 
         });
     });
 }
+
+process.exitCode = 0;
