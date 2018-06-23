@@ -13,8 +13,7 @@
   ],
   "dependencies": {
     "moment": "^2.22.2",
-    "mongodb": "^3.0.10",
-    "promise-fs": "^1.3.0"
+    "mongodb": "^3.0.10"
   },
   "author": "Stuart Williams",
   "license": "MIT"
