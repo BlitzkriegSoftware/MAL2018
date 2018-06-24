@@ -12,6 +12,7 @@
     "Seed"
   ],
   "dependencies": {
+    "make-promises-safe": "^1.1.0",
     "moment": "^2.22.2",
     "mongodb": "^3.0.10"
   },
