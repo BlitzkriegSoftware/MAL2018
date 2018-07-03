@@ -65,7 +65,7 @@ async function makeUserTestData(db) {
     var data = await readFile(dataFile, 'utf8');
     var users = JSON.parse(data);
     users.forEach(function (item) {
-        res = await db.collection(userCollection).insertOne(item);
+        res = db.collection(userCollection).insertOne(item);
         console.log(res);
     });
     return true;
