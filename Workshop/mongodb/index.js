@@ -48,6 +48,7 @@ async function Main() {
 }
 
 Main().then(() => {
+    console.log("Done...");
     process.exit(exitCode);
 });
 
@@ -73,22 +74,17 @@ async function needsData(db, collectionName) {
     return flag;
 }
 
-function insertStatus(error, response) {
-    if(error) {
-        throw error;
-    } else {
-       console.log(`inserted record: ${ JSON.stringify(response.ops[0]) }` );
-    }
-    return true;
-}
-
 async function makeUserTestData(db) {
     var dataFile = path.join(__dirname, dataFolder, 'users.json');
     var data = await readFile(dataFile, 'utf8');
     var users = JSON.parse(data);
+    
     users.forEach(function (item) {
-        db.collection(userCollection).insertOne(item, {}, insertStatus);
+      
+        await db.collection(userCollection).insertOne(item);
+
     });
+
     return true;
 }
 
@@ -99,7 +95,7 @@ async function makePostsTestData(db) {
 
     posts.forEach(function (item) {
 
-        db.collection(postCollection).insertOne(item, {}, insertStatus);
+        await db.collection(postCollection).insertOne(item);
 
         var imagePath = path.join(__dirname, dataFolder, item.image);
 
@@ -124,8 +120,7 @@ async function makePostsTestData(db) {
             console.log(err);
         });
 
-        fs.createReadStream(imagePath).pipe(upStream);
-
+        await fs.createReadStream(imagePath).pipe(upStream);
     });
 
     return true;
