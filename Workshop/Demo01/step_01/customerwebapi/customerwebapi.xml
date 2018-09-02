@@ -4,6 +4,67 @@
         <name>customerwebapi</name>
     </assembly>
     <members>
+        <member name="T:customerwebapi.Controllers.CustomerController">
+            <summary>
+            Customer Controller
+            </summary>
+        </member>
+        <member name="M:customerwebapi.Controllers.CustomerController.#ctor(CustomerData.Repository.ICustomerRepository)">
+            <summary>
+            CTOR
+            </summary>
+            <param name="customerRepository">ICustomerRepository</param>
+        </member>
+        <member name="M:customerwebapi.Controllers.CustomerController.GetById(System.Int32)">
+            <summary>
+            Get by ID
+            </summary>
+            <param name="id">id</param>
+            <returns>Customer</returns>
+        </member>
+        <member name="M:customerwebapi.Controllers.CustomerController.AddUpdate(CustomerData.Customer)">
+            <summary>
+            Add/Update
+            </summary>
+            <param name="c">Customer</param>
+            <returns>Customer</returns>
+        </member>
+        <member name="M:customerwebapi.Controllers.CustomerController.Delete(System.Int32)">
+            <summary>
+            Delete by ID
+            </summary>
+            <param name="id">id</param>
+            <returns>True if ok</returns>
+        </member>
+        <member name="T:customerwebapi.Controllers.HomeController">
+            <summary>
+            Home
+            </summary>
+        </member>
+        <member name="M:customerwebapi.Controllers.HomeController.Index">
+            <summary>
+            Index => Swagger
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:customerwebapi.Program">
+            <summary>
+            Program
+            </summary>
+        </member>
+        <member name="M:customerwebapi.Program.Main(System.String[])">
+            <summary>
+            Main
+            </summary>
+            <param name="args">args</param>
+        </member>
+        <member name="M:customerwebapi.Program.CreateWebHostBuilder(System.String[])">
+            <summary>
+            Create Web Host Builder
+            </summary>
+            <param name="args">args</param>
+            <returns>IWebHostBuilder</returns>
+        </member>
         <member name="T:customerwebapi.Startup">
             <summary>
             Start Up

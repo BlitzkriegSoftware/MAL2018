@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CustomerData.Repository;
@@ -13,7 +14,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
 
-
 namespace customerwebapi
 {
     /// <summary>
@@ -21,6 +21,9 @@ namespace customerwebapi
     /// </summary>
     public class Startup
     {
+
+        private const string CorsPolicyName = "AllowAll";
+
         /// <summary>
         /// CTOR
         /// </summary>
@@ -42,6 +45,8 @@ namespace customerwebapi
         /// <param name="services">IServiceCollection</param>
         public void ConfigureServices(IServiceCollection services)
         {
+            var filePath = Path.Combine(System.AppContext.BaseDirectory, "customerwebapi.xml");
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddMvcCore().AddApiExplorer();
@@ -49,11 +54,25 @@ namespace customerwebapi
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "Customer API", Version = "v1" });
+                c.IncludeXmlComments(filePath);
+
+                c.DescribeAllEnumsAsStrings();
+                c.UseReferencedDefinitionsForEnums();
+            });
+
+            services.AddCors(options => {
+                options.AddPolicy(CorsPolicyName,
+                    builder =>
+                    {
+                        builder
+                            .AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()
+                            ;
+                    });
             });
 
             services.AddScoped<ICustomerRepository, CustomerRepository>();
-
-            
         }
 
         // 
@@ -81,6 +100,9 @@ namespace customerwebapi
                 c.DocumentTitle = "Modern Apps Live 2018, Orlando Fla";
                 // c.HeadContent = "Demo for Modernizing + Migrating an API";
             });
+
+            app.UseCors(CorsPolicyName);
+
             app.UseMvc();
          
         }
