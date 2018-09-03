@@ -13,7 +13,7 @@ namespace CustomerData
         /// PK of Person
         /// <para>Mongo DB is super fussy about this name</para>
         /// </summary>
-        public string _id { get; set; }
+        public int _id { get; set; }
         /// <summary>
         /// Last Name
         /// </summary>
@@ -61,5 +61,15 @@ namespace CustomerData
                 return _preference;
             }
         }
+
+        /// <summary>
+        ///  Debug string
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return string.Format("id {0}|{1}|{2}|{3:yyyy/MM/dd}|{4}|{5}|p {6}|a {7}", this._id, this.NameFirst, this.NameLast, this.Birthday, this.Company, this.EMail, this.Preference.Count, this.Addresses.Count);
+        }
+
     }
 }
