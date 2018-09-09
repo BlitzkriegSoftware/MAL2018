@@ -5,6 +5,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Net;
 
+// https://code-maze.com/global-error-handling-aspnetcore/
+
 namespace customerwebapi.Helpers
 {
     /// <summary>
