@@ -19,33 +19,26 @@ namespace CustomerData.Repository
         /// <returns>Customer</returns>
         public Customer GetById(int id)
         {
-            IQueryable<Customer> customers = TestData.DataFactory.Customers;
-            var customer = customers.Where(c => c._id == id).FirstOrDefault();
+            Customer customer = null;
+            if (TestData.DataFactory.CustomerData.ContainsKey(id)) customer= TestData.DataFactory.CustomerData[id];
             return customer;
         }
 
         /// <summary>
         /// Add/Update 
         /// </summary>
-        /// <param name="c">Customer</param>
+        /// <param name="c2">Customer</param>
         /// <returns>Customer</returns>
-        public Customer AddUpdate(Customer c)
+        public Customer AddUpdate(Customer c2)
         {
-            var customer = TestData.DataFactory.Customers.Where(t => t._id == c._id).FirstOrDefault();
-            if((customer == null) || (c._id <= 0))
+            if(TestData.DataFactory.CustomerData.ContainsKey(c2._id))
             {
-                int id = TestData.DataFactory.Customers.Max(p => p._id);
-                id++;
-                c._id = id;
-                TestData.DataFactory.CustomerData.Add(c);
+                TestData.DataFactory.CustomerData[c2._id] = c2;
             } else
             {
-                var index = TestData.DataFactory.CustomerData.IndexOf(c);
-                if (index > 0) TestData.DataFactory.CustomerData.RemoveAt(index);
-                TestData.DataFactory.CustomerData.Add(c);
+                TestData.DataFactory.CustomerData.Add(c2._id, c2);
             }
-
-            return c;
+            return c2;
         }
 
         /// <summary>
@@ -56,9 +49,7 @@ namespace CustomerData.Repository
         public bool Delete(int id)
         {
             bool deleted = false;
-            var customer = TestData.DataFactory.Customers.Where(t => t._id == id).FirstOrDefault();
-            var index = TestData.DataFactory.CustomerData.IndexOf(customer);
-            if (index > 0) { TestData.DataFactory.CustomerData.RemoveAt(index); deleted = true; }
+            if(TestData.DataFactory.CustomerData.ContainsKey(id)) { TestData.DataFactory.CustomerData.Remove(id); deleted = true;  }
             return deleted;
         }
 

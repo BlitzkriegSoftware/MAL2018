@@ -4,8 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CustomerData.Repository;
+using customerwebapi.Helpers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -50,7 +52,7 @@ namespace customerwebapi
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddMvcCore().AddApiExplorer();
-
+                       
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "Customer API", Version = "v1" });
@@ -81,7 +83,8 @@ namespace customerwebapi
         /// </summary>
         /// <param name="app">IApplicationBuilder</param>
         /// <param name="env">IHostingEnvironment</param>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        /// <param name="logger">ILogger</param>
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILogger<string> logger)
         {
             if (env.IsDevelopment())
             {
@@ -89,22 +92,28 @@ namespace customerwebapi
             }
             else
             {
-                app.UseHsts();
+                app.UseStatusCodePages(async context =>
+                {
+                    context.HttpContext.Response.ContentType = "text/plain";
+                    await context.HttpContext.Response.WriteAsync("Status code page, status code: " + context.HttpContext.Response.StatusCode);
+                });
             }
 
             app.UseHttpsRedirection();
+            app.UseHsts();
+
+            app.ConfigureExceptionHandler(logger);
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Customer API V1");
                 c.DocumentTitle = "Modern Apps Live 2018, Orlando Fla";
-                // c.HeadContent = "Demo for Modernizing + Migrating an API";
             });
 
             app.UseCors(CorsPolicyName);
 
             app.UseMvc();
-         
         }
     }
 }

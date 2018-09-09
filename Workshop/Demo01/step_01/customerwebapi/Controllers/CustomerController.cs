@@ -36,7 +36,11 @@ namespace customerwebapi.Controllers
         [Route("GetById/{id}")]
         public ActionResult GetById(int id)
         {
-            return Ok(_customerRepository.GetById(id));
+            var c = _customerRepository.GetById(id);
+            if (c != null)
+                return Ok(c);
+            else
+                return NotFound(id);
         }
 
         /// <summary>

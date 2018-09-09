@@ -47,6 +47,167 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:customerwebapi.Helpers.ExceptionMiddlewareExtensions">
+            <summary>
+            Extension: Exception Middleware
+            </summary>
+        </member>
+        <member name="M:customerwebapi.Helpers.ExceptionMiddlewareExtensions.ConfigureExceptionHandler(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.Extensions.Logging.ILogger{System.String})">
+            <summary>
+            Configure Exception Handler Middleware Method
+            </summary>
+            <param name="app">IApplicationBuilder</param>
+            <param name="logger"></param>
+        </member>
+        <member name="T:customerwebapi.Helpers.TypeSwitch">
+            <summary>
+            Provides for switching on type (handy for error handling)
+            <para>From: http://stackoverflow.com/questions/11277036/typeswitching-in-c-sharp</para>
+            
+            </summary>
+        </member>
+        <member name="T:customerwebapi.Helpers.TypeSwitch.CaseInfo">
+            <summary>
+            Case Info
+            </summary>
+        </member>
+        <member name="P:customerwebapi.Helpers.TypeSwitch.CaseInfo.IsDefault">
+            <summary>
+            Is Default Case
+            </summary>
+        </member>
+        <member name="P:customerwebapi.Helpers.TypeSwitch.CaseInfo.Target">
+            <summary>
+            Type to switch on
+            </summary>
+        </member>
+        <member name="P:customerwebapi.Helpers.TypeSwitch.CaseInfo.Action">
+            <summary>
+            Thing to do if this case selected
+            </summary>
+        </member>
+        <member name="M:customerwebapi.Helpers.TypeSwitch.Do(System.Object,customerwebapi.Helpers.TypeSwitch.CaseInfo[])">
+            <summary>
+            Do the action
+            </summary>
+            <param name="source">Source of the action</param>
+            <param name="cases">Cases</param>
+        </member>
+        <member name="M:customerwebapi.Helpers.TypeSwitch.Case``1(System.Action)">
+            <summary>
+            Case Block
+            </summary>
+            <typeparam name="T">Type</typeparam>
+            <param name="action">Action</param>
+            <returns>Case Information</returns>
+        </member>
+        <member name="M:customerwebapi.Helpers.TypeSwitch.Case``1(System.Action{``0})">
+            <summary>
+            Case Block (Generic)
+            </summary>
+            <typeparam name="T">Type</typeparam>
+            <param name="action">Action</param>
+            <returns>Case Information</returns>
+        </member>
+        <member name="M:customerwebapi.Helpers.TypeSwitch.Default(System.Action)">
+            <summary>
+            Default Case Block
+            </summary>
+            <param name="action">Action</param>
+            <returns>Case Information</returns>
+        </member>
+        <member name="T:customerwebapi.Helpers.ValidationException">
+            <summary>
+            Validation Exception
+            </summary>
+        </member>
+        <member name="M:customerwebapi.Helpers.ValidationException.#ctor">
+            <summary>
+            CTOR
+            </summary>
+        </member>
+        <member name="M:customerwebapi.Helpers.ValidationException.#ctor(System.String)">
+            <summary>
+            CTOR
+            </summary>
+            <param name="message">Message</param>
+        </member>
+        <member name="M:customerwebapi.Helpers.ValidationException.#ctor(System.String,System.Exception)">
+            <summary>
+            CTOR
+            </summary>
+            <param name="message">Message</param>
+            <param name="innerException">Inner Exception</param>
+        </member>
+        <member name="M:customerwebapi.Helpers.ValidationException.#ctor(System.String,System.String,System.Collections.Generic.IList{System.String})">
+            <summary>
+            CTOR
+            </summary>
+            <param name="message">Message</param>
+            <param name="resourceName"></param>
+            <param name="validationErrors"></param>
+        </member>
+        <member name="M:customerwebapi.Helpers.ValidationException.#ctor(System.String,System.String,System.Collections.Generic.IList{System.String},System.Exception)">
+            <summary>
+            CTOR
+            </summary>
+            <param name="message">Message</param>
+            <param name="resourceName">The name of the thing being validated</param>
+            <param name="validationErrors">List of validation errors</param>
+            <param name="innerException">Inner Exception</param>
+        </member>
+        <member name="M:customerwebapi.Helpers.ValidationException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            De-Serializer CTOR
+            </summary>
+            <param name="info">SerializationInfo</param>
+            <param name="context">StreamingContext</param>
+        </member>
+        <member name="P:customerwebapi.Helpers.ValidationException.ResourceName">
+            <summary>
+            The name of the thing being validated
+            </summary>
+        </member>
+        <member name="P:customerwebapi.Helpers.ValidationException.ValidationErrors">
+            <summary>
+            List of validation errors
+            </summary>
+        </member>
+        <member name="M:customerwebapi.Helpers.ValidationException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Serializer
+            </summary>
+            <param name="info">SerializationInfo</param>
+            <param name="context">StreamingContext</param>
+        </member>
+        <member name="M:customerwebapi.Helpers.ValidationException.ValidationText(System.String)">
+            <summary>
+            Nicely formatted validation list
+            </summary>
+            <param name="separator">Separator</param>
+            <returns>List as a string</returns>
+        </member>
+        <member name="T:customerwebapi.Models.ErrorDetails">
+            <summary>
+            Error Details
+            </summary>
+        </member>
+        <member name="P:customerwebapi.Models.ErrorDetails.StatusCode">
+            <summary>
+            Status Code
+            </summary>
+        </member>
+        <member name="P:customerwebapi.Models.ErrorDetails.Message">
+            <summary>
+            Message
+            </summary>
+        </member>
+        <member name="M:customerwebapi.Models.ErrorDetails.ToString">
+            <summary>
+            Debug To String
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:customerwebapi.Program">
             <summary>
             Program
@@ -87,12 +248,13 @@
             </summary>
             <param name="services">IServiceCollection</param>
         </member>
-        <member name="M:customerwebapi.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IHostingEnvironment)">
+        <member name="M:customerwebapi.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IHostingEnvironment,Microsoft.Extensions.Logging.ILogger{System.String})">
             <summary>
             This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
             </summary>
             <param name="app">IApplicationBuilder</param>
             <param name="env">IHostingEnvironment</param>
+            <param name="logger">ILogger</param>
         </member>
     </members>
 </doc>
