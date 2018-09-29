@@ -20,7 +20,23 @@
             Get by ID
             </summary>
             <param name="id">id</param>
+            <response code="200">Customer</response>
+            <response code="404">ID Not Found</response>
             <returns>Customer</returns>
+        </member>
+        <member name="M:customerwebapi.Controllers.CustomerController.Search(System.String)">
+            <summary>
+            Search First Name, Last Name, E-Mail, Company
+            </summary>
+            <param name="text">search text (invariant)</param>
+            <returns>List of matching customers</returns>
+        </member>
+        <member name="M:customerwebapi.Controllers.CustomerController.SearchByAddress(System.String)">
+            <summary>
+            Search Address1, Address2, City
+            </summary>
+            <param name="text">search text (invariant)</param>
+            <returns>List of matching customers</returns>
         </member>
         <member name="M:customerwebapi.Controllers.CustomerController.AddUpdate(CustomerData.Customer)">
             <summary>
