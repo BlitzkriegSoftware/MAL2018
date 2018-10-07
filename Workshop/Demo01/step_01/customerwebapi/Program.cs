@@ -21,7 +21,8 @@ namespace customerwebapi
         /// <param name="args">args</param>
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            CreateWebHostBuilder(args)
+                .Build().Run();
         }
 
         /// <summary>

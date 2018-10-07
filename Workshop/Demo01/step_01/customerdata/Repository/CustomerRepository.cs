@@ -3,6 +3,9 @@ using System.Linq;
 
 namespace CustomerData.Repository
 {
+    /// <summary>
+    /// Repository: Customer
+    /// </summary>
     public class CustomerRepository : ICustomerRepository
     {
         /// <summary>

@@ -2,6 +2,9 @@
 
 namespace CustomerData.Repository
 {
+    /// <summary>
+    /// Interface: Customer Repository
+    /// </summary>
     public interface ICustomerRepository
     {
         /// <summary>
