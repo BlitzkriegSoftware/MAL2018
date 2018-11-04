@@ -27,6 +27,9 @@ namespace customerwebapi
 
         /// <summary>
         /// Create Web Host Builder
+        /// <para>
+        /// Notice this is where logging can be configured early, notice we focus on 12-Factor logging e.g. trace and debug
+        /// </para>
         /// </summary>
         /// <param name="args">args</param>
         /// <returns>IWebHostBuilder</returns>
