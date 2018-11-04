@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace customerwebapi.Helpers
+namespace Common.Models
 {
     /// <summary>
     /// Validation Exception
     /// </summary>
     [Serializable]
-    public class ValidationException : Exception
+    public class BsValidationException : Exception
     {
         private readonly string resourceName;
         private readonly IList<string> validationErrors;
@@ -19,7 +19,7 @@ namespace customerwebapi.Helpers
         /// <summary>
         /// CTOR
         /// </summary>
-        public ValidationException()
+        public BsValidationException()
         {
         }
 
@@ -27,7 +27,7 @@ namespace customerwebapi.Helpers
         /// CTOR
         /// </summary>
         /// <param name="message">Message</param>
-        public ValidationException(string message)
+        public BsValidationException(string message)
             : base(message)
         {
         }
@@ -37,7 +37,7 @@ namespace customerwebapi.Helpers
         /// </summary>
         /// <param name="message">Message</param>
         /// <param name="innerException">Inner Exception</param>
-        public ValidationException(string message, Exception innerException)
+        public BsValidationException(string message, Exception innerException)
             : base(message, innerException)
         {
         }
@@ -48,7 +48,7 @@ namespace customerwebapi.Helpers
         /// <param name="message">Message</param>
         /// <param name="resourceName"></param>
         /// <param name="validationErrors"></param>
-        public ValidationException(string message, string resourceName, IList<string> validationErrors)
+        public BsValidationException(string message, string resourceName, IList<string> validationErrors)
             : base(message)
         {
             this.resourceName = resourceName;
@@ -62,7 +62,7 @@ namespace customerwebapi.Helpers
         /// <param name="resourceName">The name of the thing being validated</param>
         /// <param name="validationErrors">List of validation errors</param>
         /// <param name="innerException">Inner Exception</param>
-        public ValidationException(string message, string resourceName, IList<string> validationErrors, Exception innerException)
+        public BsValidationException(string message, string resourceName, IList<string> validationErrors, Exception innerException)
             : base(message, innerException)
         {
             this.resourceName = resourceName;
@@ -77,7 +77,7 @@ namespace customerwebapi.Helpers
         /// <param name="info">SerializationInfo</param>
         /// <param name="context">StreamingContext</param>
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
-        protected ValidationException(SerializationInfo info, StreamingContext context)
+        protected BsValidationException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
             this.resourceName = info.GetString("ResourceName");
@@ -137,4 +137,5 @@ namespace customerwebapi.Helpers
         }
 
     }
+
 }

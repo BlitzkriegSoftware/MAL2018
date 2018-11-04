@@ -37,7 +37,38 @@ namespace CustomerData.Test
             c2 = Common.DeepCopier.DeepCopy<Customer>(c);
             var c5 = repo.AddUpdate(c2);
             TestContext.WriteLine("Update: {0}", c5.ToString());
-
         }
+
+        [TestMethod]
+        public void T_Search_1()
+        {
+            var repo = new CustomerRepository();
+
+            var c = repo.GetById(1);
+
+            Assert.IsNotNull(c);
+            TestContext.WriteLine("ById: {0}", c.ToString());
+
+            var results = repo.Search(c.NameLast);
+
+            Assert.IsNotNull(results);
+        }
+
+
+        [TestMethod]
+        public void T_SearchByAddress_1()
+        {
+            var repo = new CustomerRepository();
+
+            var c = repo.GetById(1);
+
+            Assert.IsNotNull(c);
+            TestContext.WriteLine("ById: {0}", c.ToString());
+
+            var results = repo.SearchByAddress(c.Addresses[0].City);
+
+            Assert.IsNotNull(results);
+        }
+
     }
 }

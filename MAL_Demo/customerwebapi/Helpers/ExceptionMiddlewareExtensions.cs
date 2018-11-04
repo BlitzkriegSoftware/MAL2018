@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Common;
+using Common.Models;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -39,15 +41,16 @@ namespace customerwebapi.Helpers
                             TypeSwitch.Case<ArgumentException>(() => { statusCode = HttpStatusCode.BadRequest;  message = ex.Message;  }),
                             TypeSwitch.Case<ArgumentNullException>(() => { statusCode = HttpStatusCode.BadRequest; message = ex.Message; }),
                             TypeSwitch.Case<ArgumentOutOfRangeException>(() => { statusCode = HttpStatusCode.BadRequest; message = ex.Message;  }),
-                            TypeSwitch.Case<ValidationException>(() => { statusCode = HttpStatusCode.BadRequest; message = ((ValidationException)ex).ValidationText("\n"); })
+                            TypeSwitch.Case<BsValidationException>(() => { statusCode = HttpStatusCode.BadRequest; message = ((BsValidationException)ex).ValidationText("\n"); })
                         );
 
                         logger.LogError($"Exception: {ex}");
 
-                        await context.Response.WriteAsync(new Models.ErrorDetails()
+                        await context.Response.WriteAsync(new ErrorPayload()
                         {
                             StatusCode = (int)statusCode,
-                            Message = message
+                            Message = message,
+                            StackTrace = ex.StackTrace
                         }.ToString());
                     }
                 });
